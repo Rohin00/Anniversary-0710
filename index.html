@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Love Story - For My Babbyy ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            background: linear-gradient(45deg, #ff1744, #e91e63, #ff4569, #ff6b9d);
+            background-size: 400% 400%;
+            animation: bgFlow 8s ease-in-out infinite;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Floating Hearts */
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255,255,255,0.7);
+            font-size: 20px;
+            animation: float 15s linear infinite;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-box {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            padding: 80px 60px;
+            border-radius: 30px;
+            border: 3px solid rgba(255,255,255,0.3);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        .hero h1 {
+            font-size: 4em;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .hero p {
+            font-size: 1.8em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .date {
+            font-size: 2em;
+            color: #ffd700;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 3.5em;
+            margin-bottom: 80px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+        }
+
+        .divider {
+            text-align: center;
+            font-size: 3em;
+            margin: 60px 0;
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+
+        /* Photo Grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .photo-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transition: all 0.5s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        .date-pin {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background: #ff1744;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            z-index: 10;
+            animation: pinPulse 2s ease-in-out infinite;
+        }
+
+        .lock-icon {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            background: #ffd700;
+            color: #333;
+            padding: 12px;
+            border-radius: 50%;
+            font-size: 1.5em;
+            z-index: 10;
+            animation: lockShake 1.5s ease-in-out infinite;
+        }
+
+        .photo-box {
+            height: 250px;
+            background: linear-gradient(45deg, #ff1744, #e91e63);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+            text-align: center;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .photo-text {
+            padding: 25px;
+            color: #333;
+            font-size: 1.1em;
+            font-style: italic;
+        }
+
+        /* PIN Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #ff1744, #e91e63);
+            margin: 10% auto;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            animation: modalSlide 0.5s ease-out;
+        }
+
+        .modal h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .pin-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 2em;
+            text-align: center;
+            border: none;
+            border-radius: 10px;
+            margin: 20px 0;
+            letter-spacing: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .pin-input:focus {
+            outline: 3px solid #ffd700;
+        }
+
+        .btn {
+            background: #ffd700;
+            color: #333;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.2em;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 0 10px;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn.cancel {
+            background: #666;
+            color: white;
+        }
+
+        /* Story Modal */
+        .story-modal {
+            background: linear-gradient(135deg, #ff1744, #e91e63);
+            margin: 5% auto;
+            padding: 50px;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .story-date {
+            background: #ffd700;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 40px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .story-text {
+            font-size: 1.3em;
+            line-height: 1.8;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* Letter Section */
+        .letter-section {
+            background: rgba(255,255,255,0.95);
+            color: #333;
+            padding: 100px 0;
+        }
+
+        .letter-box {
+            background: white;
+            padding: 60px;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .letter-box::before {
+            content: '"';
+            font-size: 8em;
+            color: rgba(255,20,68,0.2);
+            position: absolute;
+            top: -20px;
+            left: 30px;
+        }
+
+        .letter-text {
+            font-size: 1.3em;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .signature {
+            text-align: right;
+            font-size: 1.8em;
+            color: #ff1744;
+            font-weight: bold;
+            margin-top: 40px;
+        }
+
+        /* Love Section */
+        .love-section {
+            padding: 150px 0;
+            background: linear-gradient(135deg, #ff1744, #e91e63);
+            text-align: center;
+        }
+
+        .big-love {
+            font-size: 5em;
+            font-weight: bold;
+            margin-bottom: 40px;
+            animation: lovePulse 3s ease-in-out infinite;
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.5);
+        }
+
+        .kiss-emoji {
+            font-size: 8em;
+            animation: kissAnimation 4s ease-in-out infinite;
+            margin: 40px 0;
+        }
+
+        .nicknames {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .nickname {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 1.4em;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        /* Final Message Section */
+        .final-section {
+            padding: 100px 0;
+            background: rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .final-box {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            padding: 50px;
+            border-radius: 25px;
+            max-width: 600px;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid rgba(255,215,0,0.5);
+        }
+
+        .final-box:hover {
+            transform: scale(1.02);
+            border-color: #ffd700;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 80px 0;
+            background: rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .counter {
+            font-size: 2em;
+            color: #ffd700;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        /* Animations */
+        @keyframes bgFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 20px 40px rgba(255,20,68,0.3); }
+            100% { box-shadow: 0 30px 60px rgba(255,20,68,0.5); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes heartbeat {
+            0%, 50%, 100% { transform: scale(1); }
+            25%, 75% { transform: scale(1.2); }
+        }
+
+        @keyframes pinPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes lockShake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+
+        @keyframes modalSlide {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes lovePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes kissAnimation {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(5deg); }
+            75% { transform: scale(1.2) rotate(-5deg); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5em; }
+            .title { font-size: 2.5em; }
+            .big-love { font-size: 3.5em; }
+            .kiss-emoji { font-size: 5em; }
+            .nicknames { flex-direction: column; align-items: center; }
+            .photo-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Hearts -->
+    <div class="hearts" id="hearts"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-box">
+            <h1>Our Love Story</h1>
+            <p>For my beautiful Babbyy, my precious Putt 💖</p>
+            <div class="date">August 12, 2024 - Forever</div>
+        </div>
+    </section>
+
+    <div class="divider">💖</div>
+
+    <!-- Photo Gallery -->
+    <section class="section">
+        <div class="container">
+            <h2 class="title">Our Beautiful Journey</h2>
+            <div class="photo-grid">
+                
+                <div class="photo-card" onclick="showPIN('story1', '2912')">
+                    <div class="lock-icon">🔒</div>
+                    <div class="date-pin">Dec 29, 2024</div>
+                    <div class="photo-box">
+📸Enter PIN 
+                        <img src="your-photo1.jpg" alt="Our first meeting" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="photo-text">The day I met with my beautiful Babbyy in marriage </div>
+                </div>
+
+                <div class="photo-card" onclick="showPIN('story2', '1502')">
+                    <div class="lock-icon">🔒</div>
+                    <div class="date-pin">Feb 15, 2025</div>
+                    <div class="photo-box">
+                        📸 Enter PIN 
+<img src="your-photo2.jpg" alt="Our first meeting" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="photo-text">A magical day with my Mottuu</div>
+                </div>
+
+                <div class="photo-card" onclick="showPIN('story3', '1204')">
+                    <div class="lock-icon">🔒</div>
+                    <div class="date-pin">Apr 12, 2025</div>
+                    <div class="photo-box">
+                        📸 Enter PIN 😘<img src="your-photo3.jpg" alt="Our first meeting" style="width: 100%; height: 100%; object-fit: cover;">
+
+                    </div>
+                    <div class="photo-text">Amazing memories with my beloved Putt</div>
+                </div>
+
+                <div class="photo-card" onclick="showPIN('story4', '1706')">
+                    <div class="lock-icon">🔒</div>
+                    <div class="date-pin">Jun 17, 2025</div>
+                    <div class="photo-box">
+                        📸 Enter PIN Babbyy <img src="your-photo4.jpg" alt="Our first meeting" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="photo-text">Perfect moments with my Wiffeyy</div>
+                </div>
+
+                <div class="photo-card" onclick="showPIN('story5', '3006')">
+                    <div class="lock-icon">🔒</div>
+                    <div class="date-pin">Jun 30, 2025</div>
+                    <div class="photo-box">
+                        📸 Enter PIN Mottuu <img src="your-photo5.jpg" alt="Our first meeting" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="photo-text">Beautiful memories with my Ardagni 😘</div>
+                </div>
+
+                <div class="photo-card" onclick="showPIN('story6', '0710')">
+                    <div class="lock-icon">💕</div>
+                    <div class="date-pin" style="background: #ffd700; color: #333;">Forever</div>
+                    <div class="photo-box">
+                        📸 Enter PIN 🔐 <img src="your-photo6.jpg" alt="Our first meeting" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="photo-text">My Putt and Me - Perfect Together</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PIN Modal -->
+    <div id="pinModal" class="modal">
+        <div class="modal-content">
+            <h2>🔐 Enter PIN</h2>
+            <p>Enter the 4-digit code, Babbyy 💕</p>
+            <input type="password" id="pinInput" class="pin-input" maxlength="4" placeholder="0000">
+            <div>
+                <button class="btn" onclick="checkPIN()">Unlock 💖</button>
+                <button class="btn cancel" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Modals -->
+    <div id="story1" class="modal">
+        <div class="story-modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="story-date">December 29, 2024</div>
+            <div class="story-text">
+                [On December 29, 2024, when i saw you Putt! Tenu pta mere mann ch dar ta ki me ena sohna ni a tu menu phli vaar dhekna ta pr jad mai ghr bapis gya ta na mai bhut khush ta meri life ch eda da pall kde ni aya ta jad tu meri life ch ayi meri life filmy ho gyi v. Tu uss din bhut sohni lagg rhi ti putt bhut sohnii. menu uss din nitish nu milke v bhut accha lageya ta ph din ajj v menu yaad a bhut vafiya ta 🫶🥹🫂]
+            </div>
+        </div>
+    </div>
+
+    <div id="story2" class="modal">
+        <div class="story-modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="story-date">February 15, 2025</div>
+            <div class="story-text">
+                [iss din asi plan kitta ta ki asi milna a mai phla chal gya ta pr tuc late te maii bhut khush ta nervous v ta pr jad mai tere nal ake betha uss te vadiya pall hor kush ni ta menu yaad a meri uss din di starting vadiya ni ti pr jad mai tere nal ta mera din vadiya vadiya gya ta 🥰. putt tu hai ni eni magical tere nal bitaya har ik pall meri zindgi ta sub te vadiya pall a. ]
+            </div>
+        </div>
+    </div>
+
+    <div id="story3" class="modal">
+        <div class="story-modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="story-date">April 12, 2025</div>
+            <div class="story-text">
+                [putt iss dinn mai late hoo gya ta mai tenu kde v wait ni krvana chbda pr uss din lyii sorry putt uss din tu mere lyii gifts leke ayi v ti jo mai hje tak samball ke rakhe v mai una nu kde v khrb ni krna chnda oh mere lyii bhut kimtii a 🥰🫂]
+            </div>
+        </div>
+    </div>
+
+    <div id="story4" class="modal">
+        <div class="story-modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="story-date">June 17, 2025</div>
+            <div class="story-text">
+                [putt yaad a iss din mai barish ch pijj gya ta pura pijj gya fr mai institude jake apne kapde sukaye te 😂 uss din mai roots v eni jaldi chal gya ta mai sare setting phla hi krke rakhi v ti tere lyii 🤌 putt terii bhut yaad andii mai ehi pall bhut vaar yaad krdaa 🥹 mai taddy v leke aya ta mai sambal ke rakya va tu jad mrzi leli ]
+            </div>
+        </div>
+    </div>
+
+    <div id="story5" class="modal">
+        <div class="story-modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="story-date">June 30, 2025</div>
+            <div class="story-text">
+                [iss din menu yaad a ki asi dono ikhate hi pahuche te jayada frk ni peya ta una ne seen kitta ta ki nhi krne prr asii fr v setting krli ti uss din asii kiss kri ti ik dusre de 😚hayyeee 🫂🤭 eh oh pall bhut miss krdaa putt pr mai sabar krluga putt bass tu mera fall hove 🙇‍♂️🫀]
+            </div>
+        </div>
+    </div>
+
+    <div id="story6" class="modal">
+        <div class="story-modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="story-date">Us Together Forever</div>
+            <div class="story-text">
+                [putt menu ptaa maii kde kde kush na kush kr dinda pr putt mai kde v janke ni krda na kde krni a hun ta bilkul ni krni🙇‍♂️. putt mere lyii tuhi mera sub kush a tenu pta a. tera jo v kush v krn da mann hove menu dass deya kr agr mood khrb a agr sad a ta v. putt jad v gussa ave mere pe nikal deya kro mai sambal lena tenu mai tere lyii ta hai🤌. putt ajj sall ho gya sade relation nu jad tak mai zinda a me tere nal hi rehna putt tere nal forever rehnaa puri zindgi. problems ayugiya putt prr menu bass tera sath chidaa putt mai sub kush krugaa tere lyii putt bass hun apne pera pr kada ho java fr tere sare dream pure krnee. 🥹🥰🫶🫀🤌]
+            </div>
+        </div>
+    </div>
+
+    <div class="divider">💝</div>
+
+    <!-- Love Letter -->
+    <section class="letter-section">
+        <div class="container">
+            <h2 class="title" style="color: #333;">A Letter to My Everything</h2>
+            <div class="letter-box">
+                <p class="letter-text">
+                   Meri cute anjli 😚, mera sohna putt, me eh apne dill te likhda peya. Jad v mere dil di gal andi ude ch bass tu a bass tera hak a ude pe. Mai jini vaar v tenu dhekda menu hor pyari hoi janda terr nal. Putt asi 12 august 2024 ch relation ch aye te menu yaad a me tenu perpose kitta ta oh v ena gatiya tatike nal 😂 pr uthe te meri life chnage ho gyii putt 🤌. Tere annn nal meri zindgi bhut khusiya ali nale rangbari ho gyi v wifeeyy. 🥰
+                </p>
+                <p class="letter-text">
+                    Tu mere lyii rabb da pejya meri zindgi ch sub te vadiyaa nale vada gift a 💐. Tere nal reh ke menu pta lagya ki sachaa pyar bolde kinu a 🥹. Mai har tym tenu magda rabb te chahe ajj kal mai hameha tenu hi magda rabb te🙇‍♂️.
+                </p>
+                <p class="letter-text">
+                    Thank you putt 🫀 meri zindgi ch annee vaste. Har tym menu choose krn vaste. Tu menu mera apna ghar ditaa, mera apna bbf, tu mera oh banda a jide nal mai har ik gal krda har ik. Tu har moment vadiya bna dindi. Tere nal reh ke menu meri zindgi magical lagdii. Mai puri zindgi tere nal hi rehna putt 🫂🫀🥰. 
+
+I LOVE YOU FOREVER PUTT 🫀😘
+
+                </p>
+                <div class="signature">Forever yours, [TERA DHAKKAN] ❤️</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider">💞</div>
+
+    <!-- Big I Love You Section -->
+    <section class="love-section">
+        <div class="container">
+            <div class="big-love">I LOVE YOU BABBYY!</div>
+            <div class="kiss-emoji">👨‍❤️‍💋‍👩</div>
+            <div class="nicknames">
+                <div class="nickname">My Putt 💕</div>
+                <div class="nickname">My Babbyy 💖</div>
+                <div class="nickname">My Wiffeyy 💝</div>
+                <div class="nickname">My Mottuu 💗</div>
+                <div class="nickname">My Ardagni 😘</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Message -->
+    <section class="final-section">
+        <div class="container">
+            <h2 class="title">A Final Message for You</h2>
+            <div class="final-box" onclick="showPIN('finalMessage', '0710')">
+                <div style="position: relative;">
+                    <div style="position: absolute; top: -20px; right: -20px; background: #ffd700; color: #333; padding: 10px; border-radius: 50%; font-size: 1.5em;">🔐</div>
+                    <p style="font-size: 1.6em; margin-bottom: 20px;">💖 Click and enter PIN 0710 💖</p>
+                    <p style="font-style: italic; opacity: 0.9;">My deepest feelings are waiting for you, Babbyy...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="finalMessage" class="modal">
+        <div class="story-modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="story-date" style="background: #ffd700; color: #333;">My Heart's Words</div>
+            <div class="story-text">
+                <p style="font-size: 1.8em; color: #ffd700; margin-bottom: 30px;">My Beautiful Babbyy 💖</p>
+                <p style="margin-bottom: 20px;">Putt hun tu end ch pujj gyii. Tenu pta mai eh jo v likya va oh sara apne dil te likya va. Putt meri duniya tete suru hoke tere pr hi khtm ho jandi 🙇‍♂️🤌🫀.</p>
+                <p style="margin-bottom: 20px;">Putt 12 august te leke hun tak mai kde tere vare kush glt ni sochya me nhi sochda krne ta dur di gal aa. Mai bass tere nal tera hoke rehna chnda.</p>
+                <p style="margin-bottom: 20px;">Putt tuhi mera dost a mera ghar a meri family a mera sub kush a wifeyy. Tuhi meri life a mera heart ❤️ tuhi meri ardagni a 🫀🙇‍♂️</p>
+                <p style="margin-bottom: 30px;">Me jinaa tenu dhekda mera pyar din pr din tere lyii vadii jaa rehaa. Mera sohnaa putt 🥰🫶🫂</p>
+                <p style="font-size: 1.6em; color: #ffd700;">I LOVE YOU MORE THAN WORDS CAN EXPRESS! 💖</p>
+                <p style="margin-top: 20px; font-style: italic;">Forever yours, The one who loves you endlessly ❤️</p>
+                <div style="font-size: 2em; margin-top: 30px;">💕 👨‍❤️‍💋‍👩 💕</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p style="font-size: 1.5em; margin-bottom: 30px;">Thank you for being my everything, Babbyy</p>
+            <div class="counter">Days of our love story: <span id="daysCount">0</span></div>
+            <p style="margin-top: 30px; opacity: 0.8;">Made with infinite love for my precious Putt 💖</p>
+        </div>
+    </footer>
+
+    <script>
+        // PIN system
+        let currentStory = '';
+        let correctPIN = '';
+
+        function showPIN(storyId, pin) {
+            currentStory = storyId;
+            correctPIN = pin;
+            document.getElementById('pinModal').style.display = 'block';
+            document.getElementById('pinInput').focus();
+        }
+
+        function checkPIN() {
+            const enteredPIN = document.getElementById('pinInput').value;
+            if (enteredPIN === correctPIN) {
+                document.getElementById('pinModal').style.display = 'none';
+                document.getElementById(currentStory).style.display = 'block';
+                document.getElementById('pinInput').value = '';
+                createSparkles();
+            } else {
+                const input = document.getElementById('pinInput');
+                input.style.background = '#ff4444';
+                input.value = '';
+                input.placeholder = 'Wrong PIN - Try Again';
+                setTimeout(() => {
+                    input.style.background = 'white';
+                    input.placeholder = '0000';
+                }, 1500);
+            }
+        }
+
+        function closeModal() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+            document.getElementById('pinInput').value = '';
+        }
+
+        // Create sparkles effect
+        function createSparkles() {
+            for (let i = 0; i < 20; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.innerHTML = ['✨', '💫', '⭐', '🌟', '💖'][Math.floor(Math.random() * 5)];
+                sparkle.style.position = 'fixed';
+                sparkle.style.left = Math.random() * 100 + 'vw';
+                sparkle.style.top = Math.random() * 100 + 'vh';
+                sparkle.style.fontSize = Math.random() * 20 + 15 + 'px';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.style.zIndex = '9999';
+                sparkle.style.animation = 'sparkleUp 2s ease-out forwards';
+                
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 2000);
+            }
+        }
+
+        // Add sparkle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes sparkleUp {
+                0% { transform: translateY(0) scale(0); opacity: 0; }
+                50% { transform: translateY(-50px) scale(1); opacity: 1; }
+                100% { transform: translateY(-100px) scale(0); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = ['💖', '💕', '💗', '💝'][Math.floor(Math.random() * 4)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 5 + 10 + 's';
+            document.getElementById('hearts').appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 15000);
+        }
+
+        setInterval(createHeart, 1000);
+
+        // Calculate days
+        function updateDays() {
+            const start = new Date('2024-08-12');
+            const today = new Date();
+            const days = Math.floor((today - start) / (1000 * 60 * 60 * 24));
+            document.getElementById('daysCount').textContent = days;
+        }
+        updateDays();
+
+        // Enter key support
+        document.getElementById('pinInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') checkPIN();
+        });
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal();
+            }
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
